@@ -1,3 +1,9 @@
+/**
+ * Main code for the service worker.
+ * Sets an event listener for the hotkey defined in manifest.json and runs the
+ * text conversion function when it fires. Also throws the user a notification
+ * based on the response from the conversion function.
+ */
 browser.commands.onCommand.addListener(async (command) => {
   if (command === "convert_selection") {
     const activeTab = await getTab();
@@ -10,12 +16,36 @@ browser.commands.onCommand.addListener(async (command) => {
   }
 });
 
+/**
+ * Functions for getting the current browser tab, string conversion/copying
+ * and object storing the options for outcome notifications.
+ */
 async function getTab() {
-  return;
+  const queryOptions = { active: true, currentWindow: true };
+  const [activeTab] = await browser.tabs.query(queryOptions);
+  return activeTab;
 }
 
 async function convertAndCopy() {
-  return;
+  function spongeCase(text) {
+    return text
+      .split("")
+      .map((char) => {
+        return Math.random() < 0.5 ? char.toLowerCase() : char.toUpperCase();
+      })
+      .join("");
+  }
+  const selection = window.getSelection().toString();
+  if (selection) {
+    const converted = spongeCase(selection);
+    try {
+      await navigator.clipboard.writeText(converted);
+      return "success";
+    } catch (error) {
+      console.log(error);
+      return "fail";
+    }
+  } else return "noInput";
 }
 
 const responseNotifications = {
@@ -37,7 +67,7 @@ const responseNotifications = {
     title: "No text selected",
     type: "basic",
     message:
-      "You pushed the hotkey for the spongecase converter extension but had not text selected to convert!",
+      "You pushed the hotkey for the spongecase converter extension but had no text selected to convert!",
     iconUrl: "/icons/icon128.png"
   }
 };
