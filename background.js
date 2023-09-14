@@ -6,9 +6,6 @@ const testNotif = {
 };
 
 browser.commands.onCommand.addListener(async (command) => {
-  console.log("listener is running");
   if (command === "convert_selection") {
-    console.log("Hotkey pressed");
-    browser.notifications.create(testNotif);
   }
 });

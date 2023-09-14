@@ -1,0 +1,15 @@
+{
+  "name": "spongecase-ext-firefox",
+  "version": "1.0.0",
+  "description": "![stoP-THAt-RiGHT-nOW](https://github.com/ShaunFerris/spongecase-firefox/assets/119541650/5dd9240a-a84b-4605-8d2e-d627617097e7)",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.49.0"
+  }
+}
